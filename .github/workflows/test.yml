@@ -1,0 +1,40 @@
+#Nombre de la tarea
+name: Testing
+
+on: 
+  push:
+    branches:
+      - main
+      
+
+# tareas que se ejecutan
+jobs:
+  test-project:
+    # En que sistema se ejecutara
+    runs-on: ubuntu-latest
+
+    #pasos de la tarea
+    steps:
+    #Verificar el repositorio
+      - name: Checkuot repository
+        uses: actions/checkout@v2
+
+        # insertar pyhtob
+      - name: Set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+        #instalar dependencias
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+
+        # Ejecutar las pruebas unitarias
+        - name: Run Django unit tests
+          run: |
+              python manage.py test
+
+
+
